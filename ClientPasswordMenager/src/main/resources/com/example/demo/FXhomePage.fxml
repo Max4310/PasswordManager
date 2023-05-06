@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane prefHeight="630.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.FXhomePageController">
+    <top>
+        <VBox alignment="BASELINE_CENTER" spacing="30.0">
+            <Label fx:id="UserLabel" text="Bentornato ">
+                <font>
+                    <Font size="20"/>
+                </font>
+            </Label>
+
+            <VBox alignment="BASELINE_CENTER" spacing="10.0">
+                <HBox alignment="TOP_CENTER" spacing="20.0">
+                    <Label text="Cerca:" />
+                    <TextField fx:id="txtSearch" promptText="Cerca Qui La Password" />
+                    <Button mnemonicParsing="false" text="Cerca" onAction="#OnSearchAction"/>
+                </HBox>
+                <Label text="" fx:id="riferimentiSearch" textFill="royalblue"/>
+            </VBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" BorderPane.alignment="TOP_CENTER" spacing="20.0">
+            <TableView fx:id="tblPasswords" prefHeight="400.0" prefWidth="600.0">
+                <columns>
+                    <TableColumn fx:id="colWebsite" prefWidth="297.7" text="Nome Servizio" resizable="false"/>
+                    <TableColumn fx:id="colUsername" prefWidth="250.0" text="Nome Utente" resizable="false"/>
+                    <TableColumn fx:id="colPassword" prefWidth="250.0" text="Password" resizable="false"/>
+                </columns>
+            </TableView>
+            <Button defaultButton="true" mnemonicParsing="false" text="Aggiungi Password" onAction="#OnAddPassword" />
+        </VBox>
+    </center>
+    <bottom>
+        <Label BorderPane.alignment="CENTER" text="Progetto Scolastico Anno 2022/2023 4Bv - Password Manager - Max4310©" />
+    </bottom>
+</BorderPane>
+
