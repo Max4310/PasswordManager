@@ -5,6 +5,16 @@ public class Password {
     private String password;
     private String nomeServizio;
 
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Password() {}
 
     public Password(String userName, String password, String nomeServizio) {

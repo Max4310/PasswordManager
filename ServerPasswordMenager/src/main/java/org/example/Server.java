@@ -34,6 +34,7 @@ public class Server {
 
         } catch (IOException e) {
             System.err.println("Errore nella connessione!");
+
         }
     }
 }

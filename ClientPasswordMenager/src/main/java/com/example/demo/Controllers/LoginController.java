@@ -71,7 +71,6 @@ public class LoginController extends Controller {
 
                     Controller controller = HelloApplication.scenesMenager.changeScene("FXhomePage.fxml" ,"");
                     FXhomePageController controller1 = (FXhomePageController) controller;
-
                     controller1.initialize();
                 }
                 else{

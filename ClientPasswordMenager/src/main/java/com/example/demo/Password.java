@@ -1,11 +1,12 @@
 package com.example.demo;
 
 
-
 public class Password {
     private String userName;
     private String password;
     private String nomeServizio;
+
+    private int id;
 
     public Password() {}
 
@@ -37,6 +38,14 @@ public class Password {
 
     public void setNomeServizio(String nomeServizio) {
         this.nomeServizio = nomeServizio;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      fx:controller="com.example.demo.Controllers.FXPopUpContoller"
+      prefHeight="20" prefWidth="200" alignment="CENTER">
+
+    <Button prefHeight="5" prefWidth="200" text="Copia Password" onAction="#OnCopiaPassword"/>
+    <Button prefHeight="5" prefWidth="200" text="Copia Username" onAction="#OnCopiaUsername"/>
+    <Button prefHeight="5" prefWidth="200" text="Elimina Riga" onAction="#OnEliminaRiga"/>
+    <Button prefHeight="5" prefWidth="200" text="Modifica Riga" onAction="#OnModificaRiga"/>
+</VBox>

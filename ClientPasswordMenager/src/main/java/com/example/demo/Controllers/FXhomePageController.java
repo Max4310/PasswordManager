@@ -2,20 +2,30 @@ package com.example.demo.Controllers;
 
 import com.example.demo.HelloApplication;
 import com.example.demo.Password;
+import com.example.demo.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FXhomePageController extends Controller{
+
+    public static FXhomePageController controllerHomeScene;
+
+
+    @FXML private TableColumn colCopyUser;
+    @FXML private TableColumn colCopyPassword;
+
 
 
     @FXML
@@ -34,8 +44,83 @@ public class FXhomePageController extends Controller{
     private TableColumn<String, String>  colPassword;
 
 
+    public static Popup popup;
+
+
+    public static Password password;
+
 
     public void initialize() {
+        controllerHomeScene = this;
+
+        colCopyUser.setCellFactory(tc -> new TableCell<Password, String>() {
+
+            private Password passwordRow;
+            private final Button button = new Button("Copia!");
+            {
+                button.setOnAction(event -> {
+                    ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
+                    content.putString(passwordRow.getUserName());
+                    Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
+                });
+            }
+
+            @Override //metodo obbligatorio per customizzare il pulsante..
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    passwordRow = getTableView().getItems().get(getIndex());
+                    button.setPrefWidth(100.0);
+                    setGraphic(button);
+                }
+            }
+        });
+
+        colCopyPassword.setCellFactory(tc -> new TableCell<Password, String>() {
+
+            private Password passwordRow;
+            private final Button button = new Button("Copia!");
+            {
+                button.setOnAction(event -> {
+                    ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
+                    content.putString(passwordRow.getPassword());
+                    Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
+                });
+            }
+
+            @Override //metodo obbligatorio per customizzare il pulsante..
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    button.setPrefWidth(100.0);
+                    passwordRow = getTableView().getItems().get(getIndex());
+
+
+                    setGraphic(button);
+                }
+            }
+        });
+
+
+        try {
+            popup = new Popup();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(new File("src\\main\\resources\\com\\example\\demo\\PopUp.fxml").toURI().toURL());
+
+            VBox hBoxPopUp = fxmlLoader.load();
+            popup.getContent().add(hBoxPopUp);
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
         KeyCodeCombination copyKeyCodeCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);
         //aggiungo un evento "ogni volta che viene clicato un tasto sulla tastiera e ho selezionato una riga della tabella"
         tblPasswords.setOnKeyPressed(event -> {
@@ -45,18 +130,38 @@ public class FXhomePageController extends Controller{
                 ObservableList<Password> selectedPasswords = tblPasswords.getSelectionModel().getSelectedItems();
                 Password password = selectedPasswords.get(0); //prendo la prima cosa selezionata
 
-
-                ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
-                content.putString("userName: " + password.getUserName() + "\npassword: " +  password.getPassword());
-                Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
+                HelloApplication.copiaInAppunti_SO("userName: " + password.getUserName() + "\npassword: " +  password.getPassword());
 
                 event.consume(); //gli dico che è finito l'evento
+            }
+        });
+
+        tblPasswords.setOnMouseClicked(event -> {
+            popup.hide();
+
+
+            //è il click destro?
+            if(event.getButton() == MouseButton.SECONDARY && tblPasswords.getSelectionModel().getSelectedItems().size()>0){
+                password = (Password) tblPasswords.getSelectionModel().getSelectedItems().get(0);
+
+                popup.setX(event.getScreenX());
+                popup.setY(event.getScreenY());
+
+                HelloApplication.scenesMenager.showPopUp(popup);
+
+
+                tblPasswords.getSelectionModel().clearSelection();
+                event.consume();
             }
         });
 
         colWebsite.setCellValueFactory(new PropertyValueFactory<>("nomeServizio"));
         colUsername.setCellValueFactory(new PropertyValueFactory<>("userName"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+
+        /*colPassword.setCellValueFactory(new PropertyValueFactory<>("copyUsername"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("copyPassword"));*/
 
         tblPasswords.setItems(FXCollections.observableArrayList());
         //tblPasswords.getColumns().addAll(colWebsite, colUsername, colPassword);
@@ -67,7 +172,7 @@ public class FXhomePageController extends Controller{
     }
 
 
-    private void reloadObservableArrayList(ArrayList<Password> passwords){
+    public void reloadObservableArrayList(ArrayList<Password> passwords){
         ObservableList<Password> passwordList = FXCollections.observableArrayList(passwords);
         tblPasswords.setItems(passwordList);
     }
@@ -95,6 +200,16 @@ public class FXhomePageController extends Controller{
     }
 
     public void OnAddPassword(ActionEvent actionEvent) {
-        FXaddPassword controller = (FXaddPassword)  HelloApplication.scenesMenager.changeScene("FxaddPassword.fxml" ,"Aggiungi Password");
+        User target = HelloApplication.user;
+        HelloApplication.user.generateFromUser(
+                HelloApplication.serverReference.getUserFromServer(target.getUserName()+"#"+target.getTag()));
+        HelloApplication.scenesMenager.changeScene("FxaddPassword.fxml" ,"Aggiungi Password");
+    }
+
+    public void OnRicarica(ActionEvent actionEvent) {
+        User target = HelloApplication.user;
+        HelloApplication.user.generateFromUser(
+                HelloApplication.serverReference.getUserFromServer(target.getUserName()+"#"+target.getTag()));
+        reloadObservableArrayList(target.getPasswords());
     }
 }

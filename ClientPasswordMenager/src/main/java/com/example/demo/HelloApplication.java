@@ -4,6 +4,8 @@ package com.example.demo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -54,6 +56,12 @@ public class HelloApplication extends Application {
 
         serverReference.closeConnection();
 
+    }
+
+    public static void copiaInAppunti_SO(String string){
+        ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
+        content.putString(string);
+        Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
     }
 
 

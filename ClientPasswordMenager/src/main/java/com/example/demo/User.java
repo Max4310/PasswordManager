@@ -34,6 +34,9 @@ public class User {
     }
 
     public void addPassword(Password password){
+        //id dell'ultimo + 1
+        password.setId(passwords.get(passwords.size()-1).getId()+1);
+
 
         this.passwords.add(password);
         HelloApplication.serverReference.writeUserInServer(this);
@@ -43,17 +46,16 @@ public class User {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-        //System.out.println(userName + tag + generalPassword);
-
-
         objectMapper.writeValue(new File("./jsonsStorage/"+this.userName+"#"+this.tag+".json"), this);
     }
 
-    private void generateFromUser(User user){
-        this.passwords = user.passwords;
-        this.generalPassword = user.generalPassword;
-        this.tag = user.tag;
-        this.userName = user.userName;
+    public void generateFromUser(User user){
+        if(user != null){
+            this.passwords = user.passwords;
+            this.generalPassword = user.generalPassword;
+            this.tag = user.tag;
+            this.userName = user.userName;
+        }
     }
 
     public void load(String path) throws IOException {
@@ -127,5 +129,27 @@ public class User {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public void removePasswordInId(int id){
+        for(int i=0;i<passwords.size();i++){
+            if(passwords.get(i).getId() == id){
+                passwords.remove(i);
+                return;
+            }
+        }
+
+        HelloApplication.serverReference.writeUserInServer(this);
+    }
+
+    public void editPaswordInId(int id, Password newPassword){
+        for(int i=0;i<passwords.size();i++){
+            if(passwords.get(i).getId() == id){
+                passwords.set(i, newPassword);
+                return;
+            }
+        }
+
+        HelloApplication.serverReference.writeUserInServer(this);
     }
 }

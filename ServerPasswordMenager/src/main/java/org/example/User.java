@@ -17,6 +17,7 @@ public class User {
 
     private String generalPassword;
 
+
     public User(){
         passwords = new ArrayList<>();
     }
@@ -49,10 +50,12 @@ public class User {
     }
 
     private void generateFromUser(User user){
-        this.passwords = user.passwords;
-        this.generalPassword = user.generalPassword;
-        this.tag = user.tag;
-        this.userName = user.userName;
+        if(user != null){
+            this.passwords = user.passwords;
+            this.generalPassword = user.generalPassword;
+            this.tag = user.tag;
+            this.userName = user.userName;
+        }
     }
 
     public void load(String path) throws IOException {
