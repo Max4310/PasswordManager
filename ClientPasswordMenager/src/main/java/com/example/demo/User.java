@@ -35,7 +35,13 @@ public class User {
 
     public void addPassword(Password password){
         //id dell'ultimo + 1
-        password.setId(passwords.get(passwords.size()-1).getId()+1);
+
+        if(passwords.size()>0){
+            password.setId(passwords.get(passwords.size()-1).getId()+1);
+        }
+        else {
+            password.setId(0);
+        }
 
 
         this.passwords.add(password);

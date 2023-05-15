@@ -47,4 +47,11 @@ public class Password {
         this.nomeServizio = nomeServizio;
     }
 
+    public boolean equals(Password password){
+        return  this.id == password.id &&
+                this.password.equals(password.password) &&
+                this.userName.equals(password.userName) &&
+                this.nomeServizio.equals(password.nomeServizio);
+    }
+
 }

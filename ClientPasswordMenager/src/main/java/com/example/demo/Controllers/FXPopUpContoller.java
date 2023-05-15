@@ -17,6 +17,7 @@ public class FXPopUpContoller extends Controller{
 
     public void OnEliminaRiga(ActionEvent actionEvent) {
         HelloApplication.user.removePasswordInId(FXhomePageController.password.getId());
+        HelloApplication.serverReference.writeUserInServer(HelloApplication.user);
         FXhomePageController.controllerHomeScene.reloadObservableArrayList(HelloApplication.user.getPasswords());
         FXhomePageController.popup.hide();
     }

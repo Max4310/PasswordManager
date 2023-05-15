@@ -14,6 +14,8 @@ public class FXModificaPassword {
     @FXML
     private TextField TXTpassword;
 
+
+
     public void onPressIndietro(ActionEvent actionEvent) {
         FXhomePageController controller = (FXhomePageController) HelloApplication.scenesMenager.changeScene("FXhomePage.fxml" ,"");
         controller.initialize();
@@ -40,6 +42,8 @@ public class FXModificaPassword {
         Password password1 = new Password(username, password, nome);
         password1.setId(FXhomePageController.password.getId());
         HelloApplication.user.editPaswordInId(FXhomePageController.password.getId(), password1);
+
+        HelloApplication.serverReference.writeUserInServer(HelloApplication.user);
 
         onPressIndietro(new ActionEvent());
     }

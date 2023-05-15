@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class User {
@@ -17,6 +18,33 @@ public class User {
 
     private String generalPassword;
 
+
+    public boolean equals(User user){
+        boolean trovato = true;
+
+        if(user.passwords.size() == this.passwords.size()){
+            for(int i=0;i<this.passwords.size();i++){
+                if(!this.passwords.get(i).equals(user.passwords.get(i))){
+                    trovato = false;
+                    break;
+                }
+            }
+        }
+        else{
+            //System.out.println("ko emm ");
+            trovato = false;
+        }
+
+        //System.out.println(trovato);
+        //System.out.println(this.toJson());
+
+
+
+        return  this.userName.equals(user.userName) &&
+                this.tag.equals(user.tag) &&
+                this.generalPassword.equals(user.generalPassword) &&
+                trovato;
+    }
 
     public User(){
         passwords = new ArrayList<>();

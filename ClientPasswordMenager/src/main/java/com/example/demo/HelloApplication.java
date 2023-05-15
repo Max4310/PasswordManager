@@ -39,6 +39,17 @@ public class HelloApplication extends Application {
         serverReference = new Client();
         launch();
 
+        serverReference.closeConnection();
+
+    }
+
+    public static void copiaInAppunti_SO(String string){
+        ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
+        content.putString(string);
+        Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
+    }
+
+    public static void saveScene() throws IOException {
         File directory = new File("./jsonsStorage");
         for (File file : directory.listFiles()){
             if(file.exists()){
@@ -53,16 +64,6 @@ public class HelloApplication extends Application {
 
             serverReference.writeUserInServer(user);
         }
-
-        serverReference.closeConnection();
-
     }
-
-    public static void copiaInAppunti_SO(String string){
-        ClipboardContent content = new ClipboardContent(); //creo questo oggetto e dentro di metto le cose che voglio copiare
-        content.putString(string);
-        Clipboard.getSystemClipboard().setContent(content); //Aggiungo la stringa agli "appunti" del S.O. dell'utilizzatore
-    }
-
 
 }

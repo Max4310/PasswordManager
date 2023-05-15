@@ -31,10 +31,9 @@ public class Client {
             DataOutputStream out = new DataOutputStream(clientSocker.getOutputStream());
             String userJson = "writeCODEMAX##!!2dd"+user.toJson()+"\n";
             out.writeBytes(userJson);
+
+
             System.out.println("user mandato");
-
-
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -81,5 +80,42 @@ public class Client {
         }
 
     }
+    public User setNewUserInServer(String path, User newUser){
 
+        try {
+            DataOutputStream out = new DataOutputStream(clientSocker.getOutputStream());
+            DataInputStream in = new DataInputStream(clientSocker.getInputStream());
+
+            String UserAndPath = "setNewUserCODEMAX##!!2dd"+newUser.toJson()+"writeCODEMAX##!!2dd"+path+"\n";
+            out.writeBytes(UserAndPath);
+
+            System.out.println("user e path mandati");
+
+            String userString = in.readLine();
+            User user = null;
+
+            if(!userString.equals("null")){
+                user = new User();
+                user.generateFromJson(userString);
+
+                System.out.println("user ricevuto");
+            }
+
+
+            return user;
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeUserInServerMemory(){
+        try {
+            DataOutputStream out = new DataOutputStream(clientSocker.getOutputStream());
+            out.writeBytes("removeUserCODEMAX##!!2dd");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -20,6 +20,7 @@ public class FXaddPassword extends Controller{
         if(!TXTpassword.getText().equals("") && !TXTnomeServizio.getText().equals("") && !TXTuserName.getText().equals("")){
             Password password = new Password(TXTuserName.getText(), TXTpassword. getText(), TXTnomeServizio.getText());
             HelloApplication.user.addPassword(password);
+            HelloApplication.serverReference.writeUserInServer(HelloApplication.user);
 
             onPressIndietro(new ActionEvent());
         }

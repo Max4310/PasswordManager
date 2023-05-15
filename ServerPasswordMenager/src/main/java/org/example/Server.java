@@ -4,6 +4,10 @@ import com.sun.source.tree.WhileLoopTree;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Server {
 
@@ -20,6 +24,7 @@ public class Server {
             while(true){
                 System.out.println("1. aspetto un client sulla porta " + numeroPorta);
                 clientSocker = serverSocket.accept();
+
                 System.out.println("2. connessione stabilita con un client");
 
                 Runnable code = new RunnableServer(clientSocker);
@@ -35,6 +40,8 @@ public class Server {
         } catch (IOException e) {
             System.err.println("Errore nella connessione!");
 
+
+            throw new RuntimeException(e);
         }
     }
 }

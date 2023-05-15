@@ -5,33 +5,54 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuBar?>
+
+
 <BorderPane prefHeight="630.0" prefWidth="1015.0"
             xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.FXhomePageController">
+
     <top>
-        <HBox alignment="CENTER">
-            <VBox alignment="BASELINE_CENTER" spacing="30.0">
-                <Label alignment="CENTER" fx:id="UserLabel" text="Bentornato ">
-                    <font>
-                        <Font size="20"/>
-                    </font>
-                </Label>
+        <VBox>
+            <MenuBar>
+                <menus>
+                    <Menu text="User">
+                        <MenuItem text="Modifica" onAction="#OnModificaUser"/>
+                        <MenuItem text="Logout" onAction="#OnLogOut"/>
+                    </Menu>
+                    <Menu text="Password">
+                        <MenuItem text="Aggiungi" onAction="#OnAddPassword"/>
+                        <MenuItem fx:id="MENUITEMCopiaPassword" text="Copia Password" onAction="#OnCopiaPassword"/>
+                        <MenuItem fx:id="MENUITEMCopiaUserName" text="Copia Username" onAction="#OnCopiaUserName"/>
+                        <MenuItem fx:id="MENUITEMModificaPassword" text="Modifica" onAction="#OnModificaPassword"/>
+                    </Menu>
+                </menus>
+            </MenuBar>
 
-                <VBox alignment="BASELINE_CENTER" spacing="10.0">
-                    <HBox alignment="TOP_CENTER" spacing="20.0">
-                        <Label text="Cerca:" />
-                        <TextField fx:id="txtSearch" promptText="Cerca Qui La Password" />
-                        <Button mnemonicParsing="false" text="Cerca" onAction="#OnSearchAction"/>
-                    </HBox>
-                    <Label text="" fx:id="riferimentiSearch" textFill="royalblue"/>
+            <HBox alignment="CENTER">
+                <VBox alignment="BASELINE_CENTER" spacing="30.0">
+                    <Label alignment="CENTER" fx:id="UserLabel" text="Bentornato ">
+                        <font>
+                            <Font size="20"/>
+                        </font>
+                    </Label>
+
+                    <VBox alignment="BASELINE_CENTER" spacing="10.0">
+                        <HBox alignment="TOP_CENTER" spacing="20.0">
+                            <Label text="Cerca:" />
+                            <TextField fx:id="txtSearch" promptText="Cerca Qui La Password" />
+                            <Button mnemonicParsing="false" text="Cerca" onAction="#OnSearchAction"/>
+                        </HBox>
+                        <Label fx:id="riferimentiSearch" textFill="royalblue"/>
+                    </VBox>
                 </VBox>
-            </VBox>
 
 
-            <VBox alignment="CENTER" style="-fx-translate-x: 200px;">
-                <Button text="Ricarica" prefWidth="75.0" prefHeight="75.0" onAction="#OnRicarica"/>
-            </VBox>
+                <VBox alignment="CENTER" style="-fx-translate-x: 200px;">
+                    <Button text="Ricarica" prefWidth="75.0" prefHeight="75.0" onAction="#OnRicarica"/>
+                </VBox>
 
-        </HBox>
+            </HBox>
+        </VBox>
     </top>
 
     <center>
